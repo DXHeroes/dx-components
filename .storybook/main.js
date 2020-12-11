@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   "stories": [
     "../src/**/*.stories.mdx",
@@ -5,6 +7,26 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials"
-  ]
+    "@storybook/addon-essentials",
+    {
+      name: '@storybook/preset-ant-design',
+      options: {
+        lessOptions: {
+          modifyVars: {
+            'primary-color': '#1DA57A',
+            'border-radius-base': '2px',
+          }
+        }
+      }
+    }
+  ],
+  webpackFinal: async (config, { configType }) => {
+    config.module.rules.push({
+      test: /\.less$/,
+      use: ['style-loader', 'css-loader', { loader: 'less-loader', options: { lessOptions: { javascriptEnabled: true }}}],
+      include: path.resolve(__dirname, '../'),
+    });
+
+    return config;
+  },
 }

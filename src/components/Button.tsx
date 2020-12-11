@@ -6,3 +6,6 @@ import React from "react"
 //     <AntButton {...props}></AntButton>
 //   )
 // }
+
+// export const Button = AntButton;
+export { Button } from "antd";
